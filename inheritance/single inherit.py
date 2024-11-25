@@ -1,4 +1,5 @@
 class Parent:
+    eyes = None
     def __init__(self):
         print("parent constructor")
         self.eyes = 2
@@ -9,11 +10,13 @@ class Parent:
 
 class Child(Parent):
     def __init__(self):
-        print("child constructor")
-        self.age = 10
         super().__init__()
 
+        print("child constructor")
+        self.age = 10
+
     def speak(self):
+        print(super.eyes)
         print("I am a child")
 
 
