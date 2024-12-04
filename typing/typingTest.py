@@ -1,4 +1,4 @@
-from typing import List, Any, Dict, Optional
+from typing import List, Any, Dict, Optional, Union, Tuple
 
 age: int = 10
 
@@ -57,11 +57,93 @@ def getPersonName(person: Person) -> str:
 getPersonName(Person("john", 10))
 
 
-
-def prinVal(valL: Any)-> None:
+def prinVal(valL: Any) -> None:
     print(val)
+
 
 prinVal(10)
 print([10])
 
 # Generics...
+
+
+# class Stack:
+#     def __init__(self) -> None:
+#         self.stack: List[int] = []
+#
+#     def push(self, val: int) -> None:
+#         self.stack.append(val)
+#
+#     def pop(self) -> int:
+#         return self.stack.pop()
+#
+#
+# class Stack:
+#     def __init__(self) -> None:
+#         self.stack: List[str] = []
+#
+#     def push(self, val: str) -> None:
+#         self.stack.append(val)
+#
+#     def pop(self) -> str:
+#         return self.stack.pop()
+
+
+from typing import Generic, TypeVar
+
+R = TypeVar("R")
+
+
+class Stack(Generic[R]):
+    def __init__(self, val: List[R]) -> None:
+        self.stack: List[R] = val
+
+    def push(self, val: R) -> None:
+        self.stack.append(val)
+
+    def pop(self) -> R:
+        return self.stack.pop()
+
+
+# stack1 = Stack[int](["a", "v"])
+
+T = TypeVar("T", int, float)
+
+
+def add(a: T, b: T) -> T:
+    return a + b
+
+
+def add2(a: Union[int, float], b: Union[int, float]) -> Union[int, float]:
+    return a + b
+
+
+add2(1, 2.0)
+
+
+def test(*args: Tuple[int, float]) -> None:
+    print(args)
+
+
+test((1, 2.0))
+
+from typing import Callable, TypeVar
+
+T1 = TypeVar("T1")
+R1 = TypeVar("R1")
+
+
+def log_dec(func: Callable[[T1], R1]) -> Callable[[T1], R1]:
+    def wrapper(*args: T1, **kwargs: T1) -> R1:
+        print("hello")
+        return func(*args, **kwargs)
+
+    return wrapper
+
+
+@log_dec
+def double(x: int) -> int:
+    return x * 2
+
+
+result = double(10)
