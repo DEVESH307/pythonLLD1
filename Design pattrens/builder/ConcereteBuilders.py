@@ -9,21 +9,27 @@ class GamingBuilder(ComputerBuilder):
         self.disk = None
         self.gpu = None
 
-    def set_gpu(self, gpu):
+    def set_gpu(self, gpu='NVIDIA'):
         if gpu == None:
             raise Exception("No GPU specified")
         self.gpu = gpu
+        return self
 
-    def set_cpu(self, cpu):
+    def set_cpu(self, cpu='1 core'):
         self.cpu = cpu
+        return self
 
     def set_disk(self, disk='256 SSD'):
         if disk == "HDD":
             raise Exception("No ssd specified")
         self.disk = disk
+        return self
 
-    def set_ram(self, ram):
+
+    def set_ram(self, ram=10):
         self.ram = ram
+        return self
+
 
     def validate(self):
         if self.ram < 8:
@@ -41,17 +47,21 @@ class OfficeBuilder(ComputerBuilder):
         self.disk = None
         self.gpu = None
 
-    def set_gpu(self, gpu):
+    def set_gpu(self, gpu=None):
         self.gpu = gpu
+        return self
 
-    def set_cpu(self, cpu):
+    def set_cpu(self, cpu=1):
         self.cpu = cpu
+        return self
 
     def set_disk(self, disk='256 HDD'):
         self.disk = disk
+        return self
 
-    def set_ram(self, ram):
+    def set_ram(self, ram=6):
         self.ram = ram
+        return self
 
     def validate(self):
         if self.ram > 16:
