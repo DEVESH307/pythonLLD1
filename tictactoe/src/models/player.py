@@ -12,7 +12,7 @@ class Player:
         while True:
             row = int(input("Enter row: "))
             col = int(input("Enter column: "))
-            if 0 <= row < len(board) and 0 <= col < len(board[0]):
+            if 0 <= row < board.board_size and 0 <= col < board.board_size:
                 if board.grid[row][col].status == CellStatus.EMPTY:
                     return board.grid[row][col]
 

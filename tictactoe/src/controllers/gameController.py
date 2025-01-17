@@ -1,19 +1,22 @@
+from tictactoe.src.service.GameService import GameService
 
 
 class GameController:
 
+    def __init__(self):
+        self.gameService = GameService()
     def start_game(self, size, players, winning):
-        pass
+        return self.gameService.start_game(size, players, winning)
 
     def display_board(self, game):
-        pass
+        self.gameService.display_board(game)
 
     def take_turn(self, game):
-        pass
+        self.gameService.take_turn(game)
 
 
     def undo_move(self, game):
-        pass
+        self.gameService.undo(game)
 
 
 

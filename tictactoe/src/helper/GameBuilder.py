@@ -1,4 +1,5 @@
 from tictactoe.src.CustomExceptions.InvalidPlayerException import InvalidPlayerException
+from tictactoe.src.models.board import Board
 
 
 class GameBuilder:
@@ -30,6 +31,6 @@ class GameBuilder:
         from tictactoe.src.models.Game import Game
 
         self.validate()
-        return Game(self.dimensions, self.players, self.winning_strgy)
+        return Game(Board(self.dimensions), self.players, self.winning_strgy)
 
 
