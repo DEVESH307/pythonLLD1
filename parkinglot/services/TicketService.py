@@ -1,13 +1,18 @@
 import datetime
 
-from parkinglot.models.models import Ticket, Vehicle
+from parkinglot.models.models import Ticket, Vehicle, SlotStatus
 from parkinglot.repo.gateRepo import GateRepo
+from parkinglot.strtgy.SlotFactory import SlotFactory
 
 
 class TicketService:
-    def __init__(self, gateRepo, vehicleRepo):
+    def __init__(self, gateRepo, vehicleRepo, slotRepo,
+                 parkingLotRepo, ticketRepo):
         self.GateRepo = gateRepo
         self.VehicleRepo = vehicleRepo
+        self.slotRepo = slotRepo
+        self.parkingLotRepo = parkingLotRepo
+        self.ticketRepo = ticketRepo
 
     def issueTicket(self, vehicleNumber, ownerName, gate_id, vehicleType):
         # create a ticket's object
@@ -30,11 +35,24 @@ class TicketService:
         ticket.vehicle = vehicle
 
         # find a slot..
+        slotStrgy = SlotFactory.get_slot_stgy_obj(gate.parking_lot.slot_assignment_strategy)
+
+        if slotStrgy is None:
+            raise Exception("SlotStrgy not found")
+
+        slot = slotStrgy.get_slots(vehicleType, gate.parking_lot)
+
+        if slot is None:
+            raise Exception("Slot not found")
+        # assign slot to ticket
+        ticket.parking_slot = slot
 
         # block the slot..
 
-        # update parking lot counters..
+        self.slotRepo.update_slot_status(slot, SlotStatus.FILLED)
 
-        # assign slot to ticket
+        # update parking lot counters..
+        self.parkingLotRepo.decreaseParkingLotCount(gate.parking_lot)
 
         # return ticket..
+        return self.ticketRepo.save_ticket(ticket)

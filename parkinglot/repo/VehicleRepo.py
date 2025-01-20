@@ -8,4 +8,4 @@ class VehicleRepo:
         return self.vehicleMap[number]
 
     def saveVehicle(self, vehicle):
-        self.vehicleMap[vehicle.number] = vehicle
+        self.vehicleMap[vehicle.id] = vehicle
