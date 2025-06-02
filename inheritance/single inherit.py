@@ -11,15 +11,15 @@ class Parent:
 class Child(Parent):
     def __init__(self):
         super().__init__()
-
         print("child constructor")
         self.age = 10
 
     def speak(self):
-        print(super.eyes)
+        print(self.eyes)
         print("I am a child")
 
 
 c = Child()
 print(c.eyes)
 c.speak()
+
