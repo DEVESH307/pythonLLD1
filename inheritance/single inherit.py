@@ -21,5 +21,7 @@ class Child(Parent):
 
 c = Child()
 print(c.eyes)
+# Output:2
 c.speak()
-
+print(c.age)
+# Output:10
